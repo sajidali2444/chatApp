@@ -13,58 +13,12 @@ import messageIconSvg from '../Assets/messageSvg.svg';
 import profileImage from '../Assets/profilelogo.png';
 
 
-const BodyChatMainWrapper = styled.div`
-      position: absolute;
-      bottom: 5%;
-      right: 3%;
-      z-index: 99;
 
-  @media screen and (max-width: 450px) {
-   position:absolute;
-    bottom: 4%;
-    right: 0%;
-  }
- 
-    `;
-const MainChatBoxWrapperOuter = styled.div`
-      width: 300px;
-      height:  550px;
-  
-      // background-color:${props => props.theme.colors.blueDefaultColour};
-      border-radius: 20px;
-      padding: 0px;
-  position: relative;
 
-  @media screen and (max-width: 450px) {
-    width: 100%;
-    height:95vh;
-    border-radius: 20px;
-  }
-      
-    `;
-const BlackWrapperTopSection = styled.section`
-      width: 100%;
-      height: 35%;
-      border-radius: 20px 20px 0px 0px;
-      background-color:${props => props.theme.colors.darkGrayColour};
-  position: relative;
 
-  @media screen and (max-width: 450px) {
-    width: 100%;
-    height: 35%;
-  }
-  
-    `;
 
-const BlueImageWavesSection = styled.section`
-  position: relative;
-    `;
+//Box Circle Outer Style
 
-const CurveBack = styled.div`
-      height: 50px;
-      border-radius: 20px 20px 0px 0px;
-      background-color: ${props => props.theme.colors.blueDefaultColour};
-    `;
 
 const ChatBoxWrapperCircleOuter = styled.div`
       display: flex;
@@ -72,8 +26,6 @@ const ChatBoxWrapperCircleOuter = styled.div`
       align-items: center;
       flex-direction: row;
       cursor: pointer;
-      
-
     `;
 
 
@@ -144,258 +96,65 @@ const ChatBoxWrapperCircle = styled.div`
   }
     `;
 
+//BodyChat Start
 
-const WhiteSectionMainWrapper = styled.div`
-      width: 100%;
-      height: 60%;
-      background-color: ${props => props.theme.colors.whiteColour};
+const BodyChatMainWrapper = styled.div`
+      position: absolute;
+      bottom: 5%;
+      right: 3%;
+      z-index: 99;
+
+  @media screen and (max-width: 450px) {
+   position:absolute;
+    bottom: 3%;
+    right: 0%;
+  }
+ 
+    `;
+const MainChatBoxWrapperOuter = styled.div`
+      width: 300px;
+      height:  550px;
+  background-color: green;
+      // background-color:${props => props.theme.colors.blueDefaultColour};
+      border-radius: 20px;
+      padding: 0px;
+
+  @media screen and (max-width: 450px) {
+    width: 100%;
+    height:95vh;
+    border-radius: 20px;
+  }
+      
     `;
 
 
-const CloseIconWrapper = styled.div`
-  position: absolute;
-  background-color: ${props => props.theme.colors.blackColour};
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-  top:10%;
-  right: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-    `;
-
+//Chat Header Style
 const TopLogoImageStyle = styled.img`
   width: 45%;
   position: absolute;
   left:26%;
-  top:9%;
+  top:14%;
   z-index: 99;
   overflow: hidden;
   
   
   @media screen and (max-width: 450px){
-    width: 35%;
-    left:32%;
+    width: 40%;
+    left:30%;
+  }
+  @media screen and (max-width: 360px){
+    width: 38%;
+    left:30%;
+    top:30%;
   }
     `;
-
-
-//FooterSectionStyle
-
-const FooterSectionWrapper = styled.section`
-  height: 7%;
-  border-radius: 0px 0px 20px 20px;
-  background-color: ${props => props.theme.colors.blueDefaultColour};
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
- 
-    `;
-
-const FooterListenWrapper = styled.div`
-  width: 70%;
- 
-    `;
-
-const FooterCrossIconWrapper = styled.div`
-  margin-left: 10px;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-    `;
-
-
-
-const ToggleListenSwitchWrapper = styled.div`
-  margin-left: 10px;
-  margin-right: 10px;
-
-  & .ant-switch.ant-switch-checked {
-    background-color: ${props => props.theme.colors.greenColour};
-
-  }
-
-  & .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background-color: ${props => props.theme.colors.greenColour};
-  }
-
-  & .ant-switch .ant-switch-checked:not(.ant-switch-disabled) {
-    background-color: ${props => props.theme.colors.whiteGrayColour};
-  }
-
-  & .ant-switch:hover:not(.ant-switch-disabled) {
-    background-color: ${props => props.theme.colors.whiteGrayColour};
-  }
-
-  & .ant-switch {
-    background-color: ${props => props.theme.colors.whiteGrayColour};
-  }
-
-`;
-
-
-const FooterLogoImageWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 10px;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  
-  & p{
-    padding-right: 5px;
-    color: ${props => props.theme.colors.whiteColour};
-    font-size: 12px;
-    font-family: ${props => props.theme.colors.sansSerifFont};
-  }
-  
-  & img{
-    width: 54%;
-  }
-    `;
-
-
-
-const ChatMessagesMainWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  position: relative;
-  // background-color:${props => props.theme.colors.whiteColour};
-  background-color: red;
-  
-  
-    `;
-
-
-const TextChatWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;  
-  flex-direction: row;
-  //height: 15%;
-  //border-top: 0.5px solid ${props => props.theme.colors.blackColour};
-
-  padding-top:10px;
-  padding-bottom: 10px;
-  background-color:white;
-  //
-  position: absolute;
-
-  bottom: 0%;
-  right:0%;
-  left:0%;
-  width: 100%;
-
-  
-  //overflow-x: hidden;
-    `;
-
-
-const TextChatStyle = styled.div`
-    width: 100%;
-  padding-left: 10px; 
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-  //vertical-align: middle;
-  //height: 100%;
-    & textarea{
-      height: 4px;
-      max-height: 70px!important;
-   
-    }
-  //   & textarea{
-  //     border:none;
-  //     background:none;
-  //     resize: none;
-  //     width: 100%;
-  //     font-size: 16px;
-  //     display: flex;
-  //     font-family:${props => props.theme.colors.sansSerifFont};
-  //     justify-content: center;
-  //     align-items: center; 
-  //     text-align: left; 
-  //     vertical-align: middle;
-  //    
-  //   }
-   & textarea::placeholder {
-     font-size: 12px;
-   }
-   & textarea:hover,
-   input:hover,
-   textarea:active,
-   input:active,
-   textarea:focus,
-   input:focus,
-   button:focus,
-   button:active,
-   button:hover,
-   label:focus,
-   .btn:active,
-   .btn.active
-   {
-     outline:0px !important;
-     -webkit-appearance:none;
-     box-shadow: none !important;
-    
-   }
-  
-    `;
-
-
-const TextChatIconsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
- 
-    `;
-
-
-const MicBackgroundStyle = styled.div`
-  background-color: ${props => props.bg && props.bg};
-  width: 37px;
-  height: 37px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  margin-left: 10px;
-  cursor: pointer;
-  margin-right: 10px;
- 
-    `;
-
-
-
-//Chat Header Style
-
-const ChatHeaderWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: -13%;
-  padding-left: 10px;
-  
-  @media screen and (max-width: 450px){
-    margin-top: 0%;
-  }
-`;
-
 
 const ChatHeaderProfileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  padding-left: 10px;
     `;
 
 
@@ -482,6 +241,194 @@ const ChatOnlineStatusWrapper = styled.div`
 `;
 
 
+
+
+const WhiteSectionMainWrapper = styled.div`
+      width: 100%;
+      height: 60%;
+  background-color: purple;
+      background-color: ${props => props.theme.colors.whiteColour};
+    `;
+
+
+
+
+
+const ChatMessagesMainWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  // background-color:${props => props.theme.colors.whiteColour};
+  background-color: red;
+  
+  
+    `;
+
+
+const TextChatWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+  flex-direction: row;
+  //height: 15%;
+  //border-top: 0.5px solid ${props => props.theme.colors.blackColour};
+
+  padding-top:10px;
+  padding-bottom: 10px;
+  background-color:white;
+  position: absolute;
+
+  bottom: 0%;
+  right:0%;
+  left:0%;
+  width: 100%;
+    `;
+
+
+const TextChatStyle = styled.div`
+    width: 100%;
+  padding-left: 10px; 
+    & textarea{
+      height: 4px;
+      max-height: 70px!important;
+   
+    }
+ 
+   & textarea::placeholder {
+     font-size: 12px;
+   }
+   & textarea:hover,
+   input:hover,
+   textarea:active,
+   input:active,
+   textarea:focus,
+   input:focus,
+   button:focus,
+   button:active,
+   button:hover,
+   label:focus,
+   .btn:active,
+   .btn.active
+   {
+     outline:0px !important;
+     -webkit-appearance:none;
+     box-shadow: none !important;
+    
+   }
+  
+    `;
+
+
+const TextChatIconsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+ 
+    `;
+
+
+const MicBackgroundStyle = styled.div`
+  background-color: ${props => props.bg && props.bg};
+  width: 37px;
+  height: 37px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin-left: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+ 
+    `;
+
+
+
+
+
+//FooterSectionStyle
+
+const FooterSectionWrapper = styled.section`
+  height: 7%;
+  border-radius: 0px 0px 20px 20px;
+  background-color: ${props => props.theme.colors.blueDefaultColour};
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+ 
+    `;
+
+const FooterListenWrapper = styled.div`
+  width: 70%;
+ 
+    `;
+
+const FooterCrossIconWrapper = styled.div`
+  margin-left: 10px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+    `;
+
+
+
+const ToggleListenSwitchWrapper = styled.div`
+  margin-left: 10px;
+  margin-right: 10px;
+
+  & .ant-switch.ant-switch-checked {
+    background-color: ${props => props.theme.colors.greenColour};
+
+  }
+
+  & .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background-color: ${props => props.theme.colors.greenColour};
+  }
+
+  & .ant-switch .ant-switch-checked:not(.ant-switch-disabled) {
+    background-color: ${props => props.theme.colors.whiteGrayColour};
+  }
+
+  & .ant-switch:hover:not(.ant-switch-disabled) {
+    background-color: ${props => props.theme.colors.whiteGrayColour};
+  }
+
+  & .ant-switch {
+    background-color: ${props => props.theme.colors.whiteGrayColour};
+  }
+
+`;
+
+
+const FooterLogoImageWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  
+  & p{
+    padding-right: 5px;
+    color: ${props => props.theme.colors.whiteColour};
+    font-size: 12px;
+    font-family: ${props => props.theme.colors.sansSerifFont};
+  }
+  
+  & img{
+    width: 54%;
+  }
+    `;
+
+
+
+
+
 const ChatBoxScreens = ({
                             silviaOpen,
                             loading,
@@ -512,114 +459,84 @@ const ChatBoxScreens = ({
                       </div>
                   }
 
-                  <BlackWrapperTopSection>
 
-                       <BlueImageWavesSection>
-                           <CloseIconWrapper onClick={handleSilviaChat}>
-                               <CgClose size={23} color={'white'} />
-                           </CloseIconWrapper>
+                  <div className='blueMainSectionImage'>
+                      <div className='blueLogoSectionWrapper'>
+                          <div className='crossIconWrapper'>
+                              <CgClose size={23} color={'white'} />
+                          </div>
+                          <TopLogoImageStyle src={logoImage}   />
 
-                           <TopLogoImageStyle src={logoImage}   />
+                      </div>
 
-                           <CurveBack >
-                           </CurveBack>
-                           <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 500"
-                                className="transition duration-300 ease-in-out delay-150">
-                               <path
-                                   d="M 0,500 C 0,500 0,250 0,250 C 96.5,281.25 193,312.5 328,288 C 463,263.5 636.4999999999999,183.25 765,174 C 893.5000000000001,164.75 977,226.5 1082,251 C 1187,275.5 1313.5,262.75 1440,250 C 1440,250 1440,500 1440,500 Z"
-                                   stroke="none"  fill="#086DB6"
-                                   className="transition-all duration-300 ease-in-out delay-150 path-0"
-                                   transform="rotate(-180 720 250)"></path>
-                           </svg>
-                       </BlueImageWavesSection>
+                      <div className='blackSectionContentWrapper'>
+                          <div className='flexWrapperBlack'>
+                                    <ChatHeaderProfileWrapper>
+                                        <ChatProfileImageWrapper>
+                                            <img src={profileImage} alt=""/>
+                                        </ChatProfileImageWrapper>
+                                        <ChatProfileImageContent>
+                                            <h4>
+                                                Chat With
+                                            </h4>
+                                            <h2>
+                                                SILVIA
+                                            </h2>
 
-                        <ChatHeaderWrapper>
-                            <ChatHeaderProfileWrapper>
-                                <ChatProfileImageWrapper>
-                                    <img src={profileImage} alt=""/>
-                                </ChatProfileImageWrapper>
-                                <ChatProfileImageContent>
-                                    <h4>
-                                        Chat With
-                                    </h4>
-                                    <h2>
-                                        SILVIA
-                                    </h2>
-
-                                </ChatProfileImageContent>
-                            </ChatHeaderProfileWrapper>
+                                        </ChatProfileImageContent>
+                                    </ChatHeaderProfileWrapper>
 
 
-                            <div className=''>
-                                {
-                                    isOnline ?
-                                   <ChatOnlineStatusWrapper>
-                                       <input type='radio' className='inputOnlineStyle' defaultChecked />
-                                        <p>
-                                            Online
-                                        </p>
-                                   </ChatOnlineStatusWrapper>
+                                        <div className=''>
+                                            {
+                                                isOnline ?
+                                               <ChatOnlineStatusWrapper>
+                                                   <input type='radio' className='inputOnlineStyle' defaultChecked />
+                                                    <p>
+                                                        Online
+                                                    </p>
+                                               </ChatOnlineStatusWrapper>
 
 
-                                        :
-                                    <ChatOnlineStatusWrapper>
-                                    <input type='radio' class='inputOfflineStyle' defaultChecked />
+                                                    :
+                                                <ChatOnlineStatusWrapper>
+                                                <input type='radio' class='inputOfflineStyle' defaultChecked />
 
-                                    <p>
-                                    Offline
-                                    </p>
-                                    </ChatOnlineStatusWrapper>
+                                                <p>
+                                                Offline
+                                                </p>
+                                                </ChatOnlineStatusWrapper>
 
 
 
-                                }
+                                            }
 
 
-                            </div>
+                                        </div>
 
-                        </ChatHeaderWrapper>
-                    </BlackWrapperTopSection>
+
+
+
+                          </div>
+
+                      </div>
+
+                  </div>
+
 
 
                     <WhiteSectionMainWrapper>
 
                        <ChatMessagesMainWrapper>
-                           {/*{userNameToken}*/}
                            <div className='chatMessagesWrapper'>
-                               <p>
-                                   asf
-                               </p>
-                               <p>
-                                   asf
-                               </p>
-                               <p>
-                                   asf
-                               </p>
-                               <p>
-                                   asf
-                               </p>
-                               <p>
-                                   asf
-                               </p>    <p>
-                               asf
-                           </p>    <p>
-                               asf
-                           </p>
-                               <p>
-                                   asf
-                               </p>
-                               <p>
-                                   asf
-                               </p>    <p>
-                               asf
-                           </p>
-
-
-
+                           <div>
+                               ssdf
 
                            </div>
 
 
+
+                           </div>
 <div>
 
 
