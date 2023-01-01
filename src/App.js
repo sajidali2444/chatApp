@@ -1,24 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import { ThemeProvider } from 'styled-components'
+import {COLORS} from "./Assets/Variables/colorsVariables";
+import ChatBoxContainer from "./Containers/ChatBoxContainer";
 
 function App() {
+    const theme = {
+        colors: COLORS
+    }
   return (
+      <ThemeProvider theme={theme}>
     <div className="App">
+      <ChatBoxContainer />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
+      </ThemeProvider>
   );
 }
 
