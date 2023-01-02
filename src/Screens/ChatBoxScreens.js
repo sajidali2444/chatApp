@@ -11,6 +11,7 @@ import logoImage from '../Assets/logoo.png'
 import footerLogoImage from '../Assets/footerLogo.png';
 import messageIconSvg from '../Assets/messageSvg.svg';
 import profileImage from '../Assets/profilelogo.png';
+import waveBackground from '../Assets/farm.png';
 
 
 
@@ -129,6 +130,56 @@ const MainChatBoxWrapperOuter = styled.div`
 
 
 //Chat Header Style
+
+
+//Top Blue section styling
+
+const BlueMainSectionImage = styled.div`
+  background-image:url(${waveBackground});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:center;
+  width: 100%;
+  height: 33%;
+  border-radius: 20px 20px 0px 0px;
+  position: relative;
+    `;
+
+const BlueLogoSectionWrapper = styled.div`
+  height: 50%;
+  position: relative;
+    `;
+
+const CrossIconWrapper = styled.div`
+  position: absolute;
+  top:25%;
+  right: 10%;
+  cursor: pointer;
+  background-color:black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+    `;
+
+const BlackSectionContentWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0%;
+    `;
+
+const FlexWrapperBlack = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+    `;
+
+
 const TopLogoImageStyle = styled.img`
   width: 45%;
   position: absolute;
@@ -429,6 +480,9 @@ const FooterLogoImageWrapper = styled.div`
 
 
 
+
+
+
 const ChatBoxScreens = ({
                             silviaOpen,
                             loading,
@@ -460,17 +514,17 @@ const ChatBoxScreens = ({
                   }
 
 
-                  <div className='blueMainSectionImage'>
-                      <div className='blueLogoSectionWrapper'>
-                          <div className='crossIconWrapper'>
+                <BlueMainSectionImage>
+                      <BlueLogoSectionWrapper>
+                         <CrossIconWrapper>
                               <CgClose size={23} color={'white'} />
-                          </div>
+                         </CrossIconWrapper>
                           <TopLogoImageStyle src={logoImage}   />
 
-                      </div>
+                      </BlueLogoSectionWrapper>
 
-                      <div className='blackSectionContentWrapper'>
-                          <div className='flexWrapperBlack'>
+                      <BlackSectionContentWrapper>
+                          <FlexWrapperBlack>
                                     <ChatHeaderProfileWrapper>
                                         <ChatProfileImageWrapper>
                                             <img src={profileImage} alt=""/>
@@ -517,11 +571,11 @@ const ChatBoxScreens = ({
 
 
 
-                          </div>
+                          </FlexWrapperBlack>
 
-                      </div>
+                      </BlackSectionContentWrapper>
 
-                  </div>
+                </BlueMainSectionImage>
 
 
 
