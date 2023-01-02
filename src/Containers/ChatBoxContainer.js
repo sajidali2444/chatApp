@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import ChatBoxScreens from "../Screens/ChatBoxScreens";
 import {useToasts} from "react-toast-notifications";
 import {nanoid} from "nanoid";
+import axios from "axios";
 
 
 const ChatBoxContainer = () => {
@@ -13,31 +14,98 @@ const ChatBoxContainer = () => {
     const [isOnline, set_isOnline] = useState(true);
     const [toggleEnabled, setToggleEnabled] = useState(false);
     const [userNameToken, setUserNameToken] = useState('');
-
+    const [userGreetMessages, setUserGreetMessages] = useState([]);
+    // { from: "", type: "", message: "" }
     let interval = null;
 
-    const handleGreetingMessages = async (guestUser) =>{
-
+    const handleGreetingMessages = async (guestUser, typeData) =>{
+        debugger
         const headers = {
             "Content-Type": "application/json",
             "x-access-token": "token-value",
             'Access-Control-Allow-Origin': '*',
         }
+        //
+        // const messages = [
+        //     { from: "robot", type: "text", message: "Hi" },
+        //     { from: "robot", type: "audio", url: "url" },
+        //     { from: "me", message: "Hello" },
+        // ];
 
-        // const res =   axios.get(`/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
-        //     .then((resp) => {
-        //             debugger
-        //             console.log(resp)
-        //         }
-        //     )
-        //     .catch((err) => {
-        //         debugger
-        //         console.log(err?.response)
-        //     });
+        const res =   axios.get(`/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
+            .then((resp) => {
+                    debugger
+                    console.log(resp)
+                if (typeData === 'firstType'){
+                    debugger
+                    const { response } = resp?.data;
+                    if (response.length > 0) {
+                        response.map((message, index) => {
+                            if (index === 0) {
+                                setUserGreetMessages((prevState) => {
+                                    const latestState = prevState;
+                                    prevState.push({from: 'robot', type: 'text', message: message});
+                                })
+                            }
+                        })
+                    }
+                    resp?.data?.response?.map((data)=>
+
+                        data?.results?.map((getData, index)=>
+                            index === 0 ?
+                                setUserGreetMessages( (prevState) => {
+                                    console.log(prevState);
+                                    console.log( prevState.push({from: 'robot', type: 'text', message: getData}));
+                                    return [];
+                                })
+                                :
+                                index === 1 ?
+                                    setUserGreetMessages([ ...userGreetMessages, {from: 'robot', type: 'voice', url: getData}])
+                                    :
+                                    null
+
+
+                        )
+
+                    )
+
+                }else{
+debugger
+                    resp?.data?.response?.map((data)=>
+
+                        data?.results?.map((getData, index)=>
+                            index === 0 ?
+                                setUserGreetMessages([...userGreetMessages, {from: 'robot', type: 'text', message: getData}])
+                                :
+                                index === 1 ?
+                                    setUserGreetMessages([...userGreetMessages, {from: 'robot', type: 'text', url: getData}])
+                                    :
+                                    null
+
+
+                        )
+
+                    )
+
+                }
+
+                debugger
+
+
+                }
+            )
+            .catch((err) => {
+                debugger
+                addToast(err.message , { appearance: 'error' });
+                console.log(err?.message)
+            });
 
     }
+debugger
+    console.log(userGreetMessages);
 
     const handleUserNameToken = async () => {
+        debugger
         setLoading(true);
 
         const data = nanoid();
@@ -53,7 +121,6 @@ const ChatBoxContainer = () => {
         //         "x-access-token": "token-value",
         //     },
         // })
-        //
 
         const headers = {
             "Content-Type": "application/json",
@@ -61,18 +128,26 @@ const ChatBoxContainer = () => {
             'Access-Control-Allow-Origin': '*',
         }
 
-        // const res =   axios.get(`/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
-        //     .then((resp) => {
-        //             debugger
-        //             console.log(resp)
-        //         handleGreetingMessages(guestUser);
-        //
-        //         }
-        //     )
-        //     .catch((err) => {
-        //         debugger
-        //         console.log(err?.response)
-        //     });
+        const res =   axios.get(`/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
+            .then((resp) => {
+                    debugger
+                    console.log(resp)
+                if(resp?.data?.success === true){
+                    debugger
+                    handleGreetingMessages(guestUser, "firstType");
+                }else{
+                    debugger
+                    addToast(resp?.data?.success , { appearance: 'warning' });
+
+                }
+
+                }
+            )
+            .catch((err) => {
+                debugger
+                addToast(err.message , { appearance: 'error' });
+                console.log(err?.message)
+            });
 
 
 
@@ -93,9 +168,11 @@ const ChatBoxContainer = () => {
 
 
     const handleSilviaChat = async () => {
+        debugger
         setSilviaOpen(!silviaOpen);
 
         const checkLocalStorage = localStorage.getItem('userNameToken');
+        debugger
         if(checkLocalStorage){
 
             setUserNameToken(checkLocalStorage);
@@ -113,7 +190,7 @@ const ChatBoxContainer = () => {
                 "x-access-token": "token-value",
                 'Access-Control-Allow-Origin': '*',
             }
-
+            //
             // const res =   axios.get(`/SilviaServer/Core/Release?user=${checkLocalStorage}`, {headers} )
             //       .then((resp) => {
             //           debugger
@@ -142,7 +219,7 @@ const ChatBoxContainer = () => {
 
         const text = event.target.value;
         setChatText(text);
-        setMicEnabled(false)
+        setMicEnabled(false);
 
     };
 
@@ -160,6 +237,35 @@ const ChatBoxContainer = () => {
         });
     }
 
+    const handleMessages = () => {
+        debugger
+        const headers = {
+            "Content-Type": "application/json",
+            "x-access-token": "token-value",
+            'Access-Control-Allow-Origin': '*',
+        }
+        debugger
+        const res =   axios.get(`/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
+            .then((resp) => {
+                    debugger
+                    console.log(resp)
+                handleGreetingMessages(userNameToken);
+                        debugger
+
+
+
+                }
+            )
+            .catch((err) => {
+                debugger
+                addToast(err.message , { appearance: 'error' });
+                console.log(err?.message)
+            });
+
+
+
+    }
+
     return(
        <ChatBoxScreens
            silviaOpen={silviaOpen}
@@ -171,6 +277,9 @@ const ChatBoxContainer = () => {
            micEnabled={micEnabled}
            handleMicPermissions={handleMicPermissions}
            handleSwitchChange={handleSwitchChange}
+           handleGreetingMessages={handleGreetingMessages}
+           userGreetMessages={userGreetMessages}
+           handleMessages={handleMessages}
 
 
        />

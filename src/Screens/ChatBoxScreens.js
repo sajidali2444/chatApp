@@ -309,8 +309,8 @@ const ChatMessagesMainWrapper = styled.div`
   height: 100%;
   width: 100%;
   position: relative;
-  // background-color:${props => props.theme.colors.whiteColour};
-  background-color: red;
+  background-color:${props => props.theme.colors.whiteColour};
+  //background-color: red;
   
   
     `;
@@ -322,8 +322,8 @@ const TextChatWrapper = styled.div`
   align-items: center;  
   flex-direction: row;
   //height: 15%;
-  //border-top: 0.5px solid ${props => props.theme.colors.blackColour};
-
+  border-top: 0.5px solid ${props => props.theme.colors.blackColour};
+  
   padding-top:10px;
   padding-bottom: 10px;
   background-color:white;
@@ -493,6 +493,9 @@ const ChatBoxScreens = ({
                             micEnabled,
                             handleMicPermissions,
                             handleSwitchChange,
+                            handleGreetingMessages,
+                            userGreetMessages,
+                            handleMessages
                         }) => {
 
     const { TextArea } = Input;
@@ -584,8 +587,7 @@ const ChatBoxScreens = ({
                        <ChatMessagesMainWrapper>
                            <div className='chatMessagesWrapper'>
                            <div>
-                               ssdf
-
+                               {/*{userGreetMessages?.map((data) => data)}*/}
                            </div>
 
 
@@ -599,7 +601,7 @@ const ChatBoxScreens = ({
                                 <TextArea
                                     style={{
 
-                                        border: '1px solid black',
+                                        // border: '1px solid black',
                                         marginBottom: 0,
                                         resize: 'none',
                                     }}
@@ -614,7 +616,7 @@ const ChatBoxScreens = ({
 
                                {chatText ?
                                    <MicBackgroundStyle bg='black'>
-                                       <RiSendPlaneFill size={18} color={'white'} />
+                                       <RiSendPlaneFill size={18} color={'white'} onClick={handleMessages} />
                                    </MicBackgroundStyle>
                                    :
                                 micEnabled ?
