@@ -3,6 +3,9 @@ import ChatBoxScreens from "../Screens/ChatBoxScreens";
 import {useToasts} from "react-toast-notifications";
 import {nanoid} from "nanoid";
 import axios from "axios";
+import {message} from "antd";
+import RecordRTC from 'recordrtc';
+import {invokeSaveAsDialog} from 'recordrtc';
 
 
 const ChatBoxContainer = () => {
@@ -15,10 +18,22 @@ const ChatBoxContainer = () => {
     const [toggleEnabled, setToggleEnabled] = useState(false);
     const [userNameToken, setUserNameToken] = useState('');
     const [userGreetMessages, setUserGreetMessages] = useState([]);
+    // const [playList, setPlayList] = useState({});
+    // const [playList, setPlayList] = useState({
+    //     isRecording: false,
+    //     blobURL: '',
+    //     isBlocked: playListfalse,
+    // });
+
     // { from: "", type: "", message: "" }
+
+
+    useEffect(()=> {
+
+    })
     let interval = null;
 
-    const handleGreetingMessages = async (guestUser, typeData) =>{
+    const handleGreetingMessages = async (guestUser, setChatText) =>{
         debugger
         const headers = {
             "Content-Type": "application/json",
@@ -31,66 +46,57 @@ const ChatBoxContainer = () => {
         //     { from: "robot", type: "audio", url: "url" },
         //     { from: "me", message: "Hello" },
         // ];
+        setChatText('');
 
         const res =   axios.get(`/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
             .then((resp) => {
-                    debugger
-                    console.log(resp)
-                if (typeData === 'firstType'){
-                    debugger
-                    const { response } = resp?.data;
-                    if (response.length > 0) {
-                        response.map((message, index) => {
+                console.log(resp?.data, "getUser resoponse");
+                const { response } = resp?.data;
+                if (response.length > 0) {
+                    response.map((messages, index) => {
+                        const { results } = messages;
+                        results.map((message, index) => {
                             if (index === 0) {
-                                setUserGreetMessages((prevState) => {
-                                    const latestState = prevState;
-                                    prevState.push({from: 'robot', type: 'text', message: message});
+                                if(message === "[silence]"){
+
+                                }else{
+                                    setUserGreetMessages((prevState) => {
+                                        const latestState = [...prevState, {from: 'robot', type: 'text', message: message}]
+                                        return latestState;
+                                    })
+                                }
+
+                            } else if (index === 1) {
+                                if(message === "[silence]"){
+
+                                }else{
+                                    debugger
+                                    //
+                                    //     const resVoice =   axios.get(`/api/tts?voice=en-us%2Fharvard-glow_tts&text=Welcome%20to%20the%20world%20of%20speech%20synthesis%21&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`)
+                                    //     .then((resp) => {
+                                    //             debugger
+                                    //             console.log(resp, "voice reponse")
+                                    //
+                                    //
+                                    //         }
+                                    //     )
+                                    //     .catch((err) => {
+                                    //         debugger
+                                    //         addToast(err.message , { appearance: 'error' });
+                                    //         console.log(err?.message)
+                                    //     });
+
+
+
+                                    setUserGreetMessages((prevState) => {
+                                    const latestState = [...prevState, {from: 'robot', type: 'voice', url: message}]
+                                    return latestState;
                                 })
+                                    }
                             }
                         })
-                    }
-                    resp?.data?.response?.map((data)=>
-
-                        data?.results?.map((getData, index)=>
-                            index === 0 ?
-                                setUserGreetMessages( (prevState) => {
-                                    console.log(prevState);
-                                    console.log( prevState.push({from: 'robot', type: 'text', message: getData}));
-                                    return [];
-                                })
-                                :
-                                index === 1 ?
-                                    setUserGreetMessages([ ...userGreetMessages, {from: 'robot', type: 'voice', url: getData}])
-                                    :
-                                    null
-
-
-                        )
-
-                    )
-
-                }else{
-debugger
-                    resp?.data?.response?.map((data)=>
-
-                        data?.results?.map((getData, index)=>
-                            index === 0 ?
-                                setUserGreetMessages([...userGreetMessages, {from: 'robot', type: 'text', message: getData}])
-                                :
-                                index === 1 ?
-                                    setUserGreetMessages([...userGreetMessages, {from: 'robot', type: 'text', url: getData}])
-                                    :
-                                    null
-
-
-                        )
-
-                    )
-
+                    })
                 }
-
-                debugger
-
 
                 }
             )
@@ -101,7 +107,7 @@ debugger
             });
 
     }
-debugger
+
     console.log(userGreetMessages);
 
     const handleUserNameToken = async () => {
@@ -134,7 +140,7 @@ debugger
                     console.log(resp)
                 if(resp?.data?.success === true){
                     debugger
-                    handleGreetingMessages(guestUser, "firstType");
+                    handleGreetingMessages(guestUser, setChatText);
                 }else{
                     debugger
                     addToast(resp?.data?.success , { appearance: 'warning' });
@@ -223,18 +229,84 @@ debugger
 
     };
 
-    const handleMicPermissions = () => {
+    const handleMicPermissions = async () => {
+        //
+        // navigator.mediaDevices.getUserMedia({audio:true})
+        //     .then(function onSuccess(stream) {
+        //         const recorder = new MediaRecorder(stream);
+        //         debugger
+        //
+        //         const data = [];
+        //         recorder.ondataavailable = (e) => {
+        //             data.push(e.data);
+        //         };
+        //         debugger
+        //         recorder.start();
+        //         recorder.onerror = (e) => {
+        //             debugger
+        //             throw e.error || new Error(e.name); // e.name is FF non-spec
+        //         }
+        //         recorder.onstop = (e) => {
+        //             debugger
+        //             const audio = document.createElement('audio');
+        //             audio.src = window.URL.createObjectURL(new Blob(data));
+        //         }
+        //         setTimeout(() => {
+        //             recorder.stop();
+        //         }, 5000);
+        //     })
+        //     .catch(function onError(error) {
+        //         debugger
+        //         console.log(error.message);
+        //     });
 
-        const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
-        permissions.then((stream) => {
-            setMicEnabled(!micEnabled);
-        }).catch((err) => {
-
-            setMicEnabled(false);
-            addToast(err.message , { appearance: 'error' });
-
-            console.log(`${err.name} : ${err.message}`)
-        });
+        // navigator.mediaDevices.getUserMedia({
+        //     video: false,
+        //     audio: true
+        // }).then(async function(stream) {
+        //   debugger
+        //     let recorder = RecordRTC(stream, {
+        //         type: 'audio'
+        //     });
+        //   debugger
+        //     recorder.startRecording();
+        //     setMicEnabled(!micEnabled);
+        //     debugger
+        //     const sleep = m => new Promise(r => setTimeout(r, m));
+        //     await sleep(3000);
+        //     debugger
+        //     recorder.stopRecording(function() {
+        //         debugger
+        //               const dataNew =   window.URL.createObjectURL(new Blob(recorder))
+        //         let blobNew = recorder.getBlob();
+        //         debugger
+        //         const resBlob =   axios.get(`https://208.109.188.242:2700/${blobNew}`)
+        //               .then((resp) => {
+        //                   debugger
+        //                   console.log(resp)
+        //
+        //
+        //                   }
+        //               )
+        //               .catch((err) => {
+        //                  debugger
+        //                   console.log(err?.response)
+        //               });
+        //
+        //         invokeSaveAsDialog(blobNew);
+        //     });
+        // });
+        // const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
+        // permissions.then((stream) => {
+        //     setMicEnabled(!micEnabled);
+        //     setPlayList({isBlocked: false});
+        // }).catch((err) => {
+        //
+        //     setMicEnabled(false);
+        //     addToast(err.message , { appearance: 'error' });
+        //     setPlayList({isBlocked: true});
+        //     console.log(`${err.name} : ${err.message}`)
+        // });
     }
 
     const handleMessages = () => {
@@ -248,8 +320,13 @@ debugger
         const res =   axios.get(`/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
             .then((resp) => {
                     debugger
+                setUserGreetMessages((prevState) => {
+                    const latestState = [...prevState, {from: 'me', type: 'text', message: chatText}]
+                    return latestState;
+                })
                     console.log(resp)
-                handleGreetingMessages(userNameToken);
+                handleGreetingMessages(userNameToken, setChatText);
+
                         debugger
 
 
@@ -263,6 +340,11 @@ debugger
             });
 
 
+
+    }
+
+
+    const handleStartMic = ( )=> {
 
     }
 
@@ -280,7 +362,8 @@ debugger
            handleGreetingMessages={handleGreetingMessages}
            userGreetMessages={userGreetMessages}
            handleMessages={handleMessages}
-
+           toggleEnabled={toggleEnabled}
+           // playList={playList}
 
        />
     )

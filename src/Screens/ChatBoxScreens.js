@@ -4,16 +4,18 @@ import './style.css'
 import {Switch, Input} from "antd";
 import {ClipLoader} from "react-spinners";
 import {CgClose} from 'react-icons/cg';
-import {BsFillMicFill, BsFillMicMuteFill} from 'react-icons/bs';
+import {BsFillMicFill, BsFillMicMuteFill, BsFillPersonFill} from 'react-icons/bs';
 import {RiSendPlaneFill} from 'react-icons/ri';
 import {GiSpeaker} from 'react-icons/gi';
 import logoImage from '../Assets/logoo.png'
 import footerLogoImage from '../Assets/footerLogo.png';
 import messageIconSvg from '../Assets/messageSvg.svg';
 import profileImage from '../Assets/profilelogo.png';
+import chatProfileImage from '../Assets/chatSilvia.png';
 import waveBackground from '../Assets/farm.png';
 
-
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 
 
@@ -115,7 +117,7 @@ const BodyChatMainWrapper = styled.div`
 const MainChatBoxWrapperOuter = styled.div`
       width: 300px;
       height:  550px;
-  background-color: green;
+      background-color: green;
       // background-color:${props => props.theme.colors.blueDefaultColour};
       border-radius: 20px;
       padding: 0px;
@@ -125,7 +127,6 @@ const MainChatBoxWrapperOuter = styled.div`
     height:95vh;
     border-radius: 20px;
   }
-      
     `;
 
 
@@ -297,6 +298,7 @@ const ChatOnlineStatusWrapper = styled.div`
 const WhiteSectionMainWrapper = styled.div`
       width: 100%;
       height: 60%;
+  max-height: 60%;
   background-color: purple;
       background-color: ${props => props.theme.colors.whiteColour};
     `;
@@ -306,13 +308,13 @@ const WhiteSectionMainWrapper = styled.div`
 
 
 const ChatMessagesMainWrapper = styled.div`
-  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
+  height: 82%;
   position: relative;
   background-color:${props => props.theme.colors.whiteColour};
-  //background-color: red;
-  
-  
+  background-color: purple;
     `;
 
 
@@ -321,17 +323,17 @@ const TextChatWrapper = styled.div`
   justify-content: space-between;
   align-items: center;  
   flex-direction: row;
-  //height: 15%;
+  //height: 25%;
   border-top: 0.5px solid ${props => props.theme.colors.blackColour};
   
   padding-top:10px;
   padding-bottom: 10px;
   background-color:white;
-  position: absolute;
-
-  bottom: 0%;
-  right:0%;
-  left:0%;
+  //position: absolute;
+  //
+  //bottom: 0%;
+  //right:0%;
+  //left:0%;
   width: 100%;
     `;
 
@@ -495,7 +497,8 @@ const ChatBoxScreens = ({
                             handleSwitchChange,
                             handleGreetingMessages,
                             userGreetMessages,
-                            handleMessages
+                            handleMessages,
+                            toggleEnabled,
                         }) => {
 
     const { TextArea } = Input;
@@ -509,7 +512,6 @@ const ChatBoxScreens = ({
                       <div className='LoadingWrapperChat'>
                           <div className='loaderCenterStyle'>
                               <ClipLoader color='#086DB6' />
-
                           </div>
 
 
@@ -584,59 +586,126 @@ const ChatBoxScreens = ({
 
                     <WhiteSectionMainWrapper>
 
-                       <ChatMessagesMainWrapper>
+                        <ChatMessagesMainWrapper>
                            <div className='chatMessagesWrapper'>
-                           <div>
-                               {/*{userGreetMessages?.map((data) => data)}*/}
+                               {userGreetMessages?.map((data) =>
+                                   data?.from === 'robot'?
+                           <div className='robotProfileWrapper'>
+                               {data?.message ?
+                                   <div className='silviaProfileImageWrapper'>
+                                       <img src={chatProfileImage} alt=""/>
+                                   </div>
+                                   :
+                                   null
+
+                               }
+                             <div style={{position: 'relative'}}>
+                                 <div className='chatBoxMessageWrapper'>
+                                     {data?.message ?
+                                         <div className='messageWrapper'>
+                                             { data?.message }
+                                         </div>
+                                      :
+                                         toggleEnabled ?
+
+                                             <div className='audioWrapper'>
+                                                 {/*<AudioPlayer*/}
+                                                 {/*    autoPlay*/}
+                                                 {/*    src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`}*/}
+                                                 {/*    onPlay={e => console.log("onPlay")}*/}
+                                                 {/*    // other props here*/}
+                                                 {/*/>*/}
+                                                 <audio controls>
+                                                     <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
+                                                 </audio>
+                                             </div>
+                                             : null
+
+                                     }
+                                 </div>
+
+
+                                   {/*<Pointer/>*/}
+                             </div>
+                           </div>
+                                       :
+                                       <div className='userProfileWrapper'>
+
+                                           <div style={{position: 'relative'}}>
+                                               <div className='chatBoxMessageWrapper'>
+
+                                                   {data?.message ?
+                                                       <div className='userMessageWrapper'>
+                                                           { data?.message }
+                                                       </div>
+                                                       :
+                                                       toggleEnabled ?
+                                                       <div className='audioWrapper'>
+                                                           <audio controls>
+                                                               <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
+                                                           </audio>
+                                                       </div>
+                                                           : null
+
+                                                   }
+                                               </div>
+                                              {/*<div className='pointerMessages'>*/}
+
+                                              {/*</div>*/}
+                                           </div>
+                                           <div className='userProfileImageWrapper'>
+                                               <BsFillPersonFill size={22} color={'white'} />
+                                           </div>
+                                       </div>
+
+                               )}
+
+
                            </div>
 
-
-
-                           </div>
-<div>
-
-
-                       <TextChatWrapper>
+                           <div></div>
+                       </ChatMessagesMainWrapper>
+                        <TextChatWrapper>
                             <TextChatStyle >
                                 <TextArea
                                     style={{
-
                                         // border: '1px solid black',
                                         marginBottom: 0,
                                         resize: 'none',
                                     }}
                                     autoSize={true}
+                                    value={chatText}
                                     onChange={handleChatText}
                                     placeholder="Type or Say Your Message"
                                 />
                                 {/*<textarea onChange={handleChatText} placeholder={"Type or Say Your Message ..."} />*/}
                             </TextChatStyle>
 
-                           <TextChatIconsWrapper>
+                            <TextChatIconsWrapper>
 
-                               {chatText ?
-                                   <MicBackgroundStyle bg='black'>
-                                       <RiSendPlaneFill size={18} color={'white'} onClick={handleMessages} />
-                                   </MicBackgroundStyle>
-                                   :
-                                micEnabled ?
-                                   <MicBackgroundStyle bg='green' onClick={handleMicPermissions}>
-                                    <BsFillMicFill size={18}/>
-                                   </MicBackgroundStyle>
-                                    :
-                                    <MicBackgroundStyle bg='#8B0000' onClick={handleMicPermissions}>
-                                    <BsFillMicMuteFill size={18} />
+
+
+                                {chatText ?
+                                    <MicBackgroundStyle bg='black'>
+                                        <RiSendPlaneFill size={18} color={'white'} onClick={handleMessages} />
                                     </MicBackgroundStyle>
+                                    :
+                                    micEnabled ?
+                                        <MicBackgroundStyle bg='green' onClick={handleMicPermissions}>
+                                            <BsFillMicFill size={18}/>
+                                        </MicBackgroundStyle>
+                                        :
+                                        <MicBackgroundStyle bg='#8B0000' onClick={handleMicPermissions}>
+                                            <BsFillMicMuteFill size={18} />
+                                        </MicBackgroundStyle>
 
 
 
-                               }
+                                }
 
-                           </TextChatIconsWrapper>
+                            </TextChatIconsWrapper>
 
-                       </TextChatWrapper>
-</div>
-                       </ChatMessagesMainWrapper>
+                        </TextChatWrapper>
                     </WhiteSectionMainWrapper>
 
                   <FooterSectionWrapper>
