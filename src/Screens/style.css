@@ -48,6 +48,7 @@
 
     font-size: 14px;
 
+
 }
 
 .pointerMessages{
@@ -61,7 +62,7 @@
 .messageWrapper{
     border-radius:13px;
     padding:10px;
-    background-color: #e1e1e1;
+    background-color: #eaeff3;
 
 }
 .userMessageWrapper{
@@ -72,15 +73,76 @@
 }
 .audioWrapper audio{
     width: 200px;
-    display: none;
+    /*display: none;*/
 }
 
 
 
 .LoadingWrapperChat{
-     background-color: red;
+     /*background-color: red;*/
     position: absolute;
     top: 50%;
     left: 43%;
     z-index: 99;
 }
+
+
+
+/*Modal Delete Style*/
+.deleteModalMainWrapper{
+    position: absolute;
+    top: 40%;
+    /*left: 35%;*/
+    z-index: 99;
+    width: 100%;
+
+}
+.deleteModalBgWrapper{
+    display: flex;
+    margin:5%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid #a6a2a2;
+    box-shadow: 2px 2px 22px #a6a2a2;
+    padding: 20px 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.deleteChatBtnWrapper{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    transition: 0.8s;
+}
+
+.deleteChatBtnWrapper .noBtnStyle{
+    background-color: #8B0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*width: 100%;*/
+    padding: 10px 5px;
+    width: 80px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+.deleteChatBtnWrapper .yesBtnStyle{
+    background-color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*width: 100%;*/
+    padding: 10px 5px;
+    width: 80px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+

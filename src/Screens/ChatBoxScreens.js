@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components';
 import './style.css'
-import {Switch, Input} from "antd";
+import {Switch, Input, Modal} from "antd";
 import {ClipLoader} from "react-spinners";
 import {CgClose} from 'react-icons/cg';
 import {BsFillMicFill, BsFillMicMuteFill, BsFillPersonFill} from 'react-icons/bs';
 import {RiSendPlaneFill} from 'react-icons/ri';
-import {GiSpeaker} from 'react-icons/gi';
+import {GiSpeaker, GiSpeakerOff} from 'react-icons/gi';
 import logoImage from '../Assets/logoo.png'
 import footerLogoImage from '../Assets/footerLogo.png';
 import messageIconSvg from '../Assets/messageSvg.svg';
@@ -117,8 +117,8 @@ const BodyChatMainWrapper = styled.div`
 const MainChatBoxWrapperOuter = styled.div`
       width: 300px;
       height:  550px;
-      background-color: green;
-      // background-color:${props => props.theme.colors.blueDefaultColour};
+      //background-color: green;
+       background-color:${props => props.theme.colors.blueDefaultColour};
       border-radius: 20px;
       padding: 0px;
 
@@ -299,7 +299,6 @@ const WhiteSectionMainWrapper = styled.div`
       width: 100%;
       height: 60%;
   max-height: 60%;
-  background-color: purple;
       background-color: ${props => props.theme.colors.whiteColour};
     `;
 
@@ -314,7 +313,7 @@ const ChatMessagesMainWrapper = styled.div`
   height: 82%;
   position: relative;
   background-color:${props => props.theme.colors.whiteColour};
-  background-color: purple;
+
     `;
 
 
@@ -499,6 +498,10 @@ const ChatBoxScreens = ({
                             userGreetMessages,
                             handleMessages,
                             toggleEnabled,
+                            handleCloseChat,
+                            handleShowModal,
+                            handleModalCancel,
+                            deleteModalOpen
                         }) => {
 
     const { TextArea } = Input;
@@ -508,6 +511,30 @@ const ChatBoxScreens = ({
 
             {silviaOpen ?
               <MainChatBoxWrapperOuter>
+                  {deleteModalOpen ?
+                  <div className='deleteModalMainWrapper'>
+                      <div className='deleteModalBgWrapper'>
+                          <p>
+                              Are you Sure to Close the Chat ?
+                          </p>
+
+                          <div className='deleteChatBtnWrapper'>
+                              <div className='noBtnStyle' onClick={handleModalCancel}>
+                                  Cancel
+                              </div>
+                              <div className='yesBtnStyle' onClick={loading ? null : handleCloseChat}>
+                                 Submit
+                              </div>
+
+                          </div>
+
+                      </div>
+
+
+                  </div>
+                      :
+                      null }
+
                   {loading &&
                       <div className='LoadingWrapperChat'>
                           <div className='loaderCenterStyle'>
@@ -518,10 +545,9 @@ const ChatBoxScreens = ({
                       </div>
                   }
 
-
                 <BlueMainSectionImage>
                       <BlueLogoSectionWrapper>
-                         <CrossIconWrapper>
+                         <CrossIconWrapper onClick={handleShowModal}>
                               <CgClose size={23} color={'white'} />
                          </CrossIconWrapper>
                           <TopLogoImageStyle src={logoImage}   />
@@ -615,7 +641,7 @@ const ChatBoxScreens = ({
                                                  {/*    onPlay={e => console.log("onPlay")}*/}
                                                  {/*    // other props here*/}
                                                  {/*/>*/}
-                                                 <audio controls>
+                                                 <audio  autoPlay>
                                                      <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
                                                  </audio>
                                              </div>
@@ -641,7 +667,7 @@ const ChatBoxScreens = ({
                                                        :
                                                        toggleEnabled ?
                                                        <div className='audioWrapper'>
-                                                           <audio controls>
+                                                           <audio autoPlay>
                                                                <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
                                                            </audio>
                                                        </div>
@@ -673,6 +699,7 @@ const ChatBoxScreens = ({
                                         marginBottom: 0,
                                         resize: 'none',
                                     }}
+                                    disabled={loading ? loading : false}
                                     autoSize={true}
                                     value={chatText}
                                     onChange={handleChatText}
@@ -683,19 +710,17 @@ const ChatBoxScreens = ({
 
                             <TextChatIconsWrapper>
 
-
-
                                 {chatText ?
                                     <MicBackgroundStyle bg='black'>
-                                        <RiSendPlaneFill size={18} color={'white'} onClick={handleMessages} />
+                                        <RiSendPlaneFill size={18} color={'white'} onClick={ loading ? null : handleMessages} />
                                     </MicBackgroundStyle>
                                     :
                                     micEnabled ?
-                                        <MicBackgroundStyle bg='green' onClick={handleMicPermissions}>
+                                        <MicBackgroundStyle bg='green' onClick={loading ? null : handleMicPermissions}>
                                             <BsFillMicFill size={18}/>
                                         </MicBackgroundStyle>
                                         :
-                                        <MicBackgroundStyle bg='#8B0000' onClick={handleMicPermissions}>
+                                        <MicBackgroundStyle bg='#8B0000' onClick={loading ? null : handleMicPermissions}>
                                             <BsFillMicMuteFill size={18} />
                                         </MicBackgroundStyle>
 
@@ -712,9 +737,16 @@ const ChatBoxScreens = ({
                       <FooterListenWrapper>
 
                       <FooterCrossIconWrapper>
-                          <GiSpeaker size={30} color={'white'} />
+                          {
+                              toggleEnabled ?
+                                  <GiSpeaker size={30} color={'white'} />
+                                  :
+                                  <GiSpeakerOff size={30} color={'white'} />
+
+                          }
+
                           <ToggleListenSwitchWrapper>
-                              <Switch  onChange={handleSwitchChange} />
+                              <Switch  defaultChecked onChange={handleSwitchChange} />
                           </ToggleListenSwitchWrapper>
                       </FooterCrossIconWrapper>
 
@@ -752,7 +784,10 @@ const ChatBoxScreens = ({
 
             }
 
+
         </BodyChatMainWrapper>
+
+
     )
 }
 
