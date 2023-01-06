@@ -34,6 +34,12 @@ const ChatBoxWrapperCircleOuter = styled.div`
 
 const BoxWelcomeWrapper = styled.div`
       position: relative;
+  
+  @media screen and (max-width: 450px){
+    & {
+      display: none;
+    }
+  }
     `;
 
 
@@ -109,7 +115,7 @@ const BodyChatMainWrapper = styled.div`
 
   @media screen and (max-width: 450px) {
    position:absolute;
-    bottom: 3%;
+    bottom: 1%;
     right: 0%;
   }
  
@@ -324,7 +330,7 @@ const TextChatWrapper = styled.div`
   flex-direction: row;
   //height: 25%;
   border-top: 0.5px solid ${props => props.theme.colors.blackColour};
-  
+  //background-color: red;
   padding-top:10px;
   padding-bottom: 10px;
   background-color:white;
@@ -341,13 +347,25 @@ const TextChatStyle = styled.div`
     width: 100%;
   padding-left: 10px; 
     & textarea{
-      height: 4px;
-      max-height: 70px!important;
+      //height: 1%;
+      max-height: 40px!important;
+      border: none;
    
     }
+  
+  
+  @media screen and (max-width: 450px){
+    & textarea{
+      //height: 1%;
+      max-height: 50px!important;
+      border: none;
+
+    }
+  }
  
    & textarea::placeholder {
      font-size: 12px;
+    
    }
    & textarea:hover,
    input:hover,
@@ -363,6 +381,7 @@ const TextChatStyle = styled.div`
    .btn.active
    {
      outline:0px !important;
+     border: none;
      -webkit-appearance:none;
      box-shadow: none !important;
     
