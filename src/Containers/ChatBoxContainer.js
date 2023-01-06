@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import ChatBoxScreens from "../Screens/ChatBoxScreens";
 import {useToasts} from "react-toast-notifications";
 import {nanoid} from "nanoid";
@@ -9,6 +9,7 @@ import {invokeSaveAsDialog} from 'recordrtc';
 
 
 const ChatBoxContainer = () => {
+
     const {addToast} = useToasts();
     const [silviaOpen, setSilviaOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,6 +20,7 @@ const ChatBoxContainer = () => {
     const [userNameToken, setUserNameToken] = useState('');
     const [userGreetMessages, setUserGreetMessages] = useState([]);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [playedAudio, setPlayedAudio] = useState([]);
 
     const handleShowModal = () => {
         debugger
@@ -67,10 +69,12 @@ const ChatBoxContainer = () => {
 
                                 }else{
                                     debugger
-                                    setUserGreetMessages((prevState) => {
+                                    setPlayedAudio((prevState) => {
                                     const latestState = [...prevState, {from: 'robot', type: 'voice', url: message}]
                                     return latestState;
                                 })
+
+
                                     }
                             }
                         })
@@ -136,17 +140,17 @@ const ChatBoxContainer = () => {
             clearInterval(interval) // for component unmount stop the interval
         }
     },[]);
-    useEffect(()=> {
-        debugger
-        if(silviaOpen === true){
-            if(chatText === ''){
-        const interval = setInterval(() => {
-            handleGreetingMessages(userNameToken, setLoading)
-        }, 4000);
-        return () => clearInterval(interval);
-            }
-        }
-    },[silviaOpen, userNameToken, chatText, setLoading]);
+    // useEffect(()=> {
+    //     debugger
+    //     if(silviaOpen === true){
+    //         if(chatText === ''){
+    //     const interval = setInterval(() => {
+    //         handleGreetingMessages(userNameToken, setLoading)
+    //     }, 4000);
+    //     return () => clearInterval(interval);
+    //         }
+    //     }
+    // },[silviaOpen, userNameToken, chatText, setLoading]);
 
 
     const handleSilviaChat = async () => {
@@ -346,6 +350,14 @@ const ChatBoxContainer = () => {
 
     }
 
+    useEffect(()=>{
+        debugger
+        setPlayedAudio([]);
+
+    },[toggleEnabled]);
+
+
+
 
 
     return(
@@ -368,6 +380,8 @@ const ChatBoxContainer = () => {
            handleShowModal={handleShowModal}
            handleModalCancel={handleModalCancel}
            deleteModalOpen={deleteModalOpen}
+           playedAudio={playedAudio}
+
 
        />
     )

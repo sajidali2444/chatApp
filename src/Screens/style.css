@@ -68,11 +68,13 @@
 .userMessageWrapper{
     border-radius:13px;
     padding:10px;
-    background-color: blue;
+    background-color: #006cb7;
     color: white;
 }
 .audioWrapper audio{
     width: 200px;
+    background-color: red;
+    display: block;
     /*display: none;*/
 }
 

@@ -501,8 +501,11 @@ const ChatBoxScreens = ({
                             handleCloseChat,
                             handleShowModal,
                             handleModalCancel,
-                            deleteModalOpen
+                            deleteModalOpen,
+                            handlePlayCheck,
+                            playedAudio
                         }) => {
+
 
     const { TextArea } = Input;
 
@@ -515,7 +518,7 @@ const ChatBoxScreens = ({
                   <div className='deleteModalMainWrapper'>
                       <div className='deleteModalBgWrapper'>
                           <p>
-                              Are you Sure to Close the Chat ?
+                              Do you want to close the chat?
                           </p>
 
                           <div className='deleteChatBtnWrapper'>
@@ -523,7 +526,7 @@ const ChatBoxScreens = ({
                                   Cancel
                               </div>
                               <div className='yesBtnStyle' onClick={loading ? null : handleCloseChat}>
-                                 Submit
+                                 Okay
                               </div>
 
                           </div>
@@ -635,15 +638,11 @@ const ChatBoxScreens = ({
                                          toggleEnabled ?
 
                                              <div className='audioWrapper'>
-                                                 {/*<AudioPlayer*/}
-                                                 {/*    autoPlay*/}
-                                                 {/*    src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`}*/}
-                                                 {/*    onPlay={e => console.log("onPlay")}*/}
-                                                 {/*    // other props here*/}
-                                                 {/*/>*/}
-                                                 <audio  autoPlay>
-                                                     <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
-                                                 </audio>
+                                                 ok
+                                                 {/*<audio  autoPlay ref={audioRef} onPlay={handlePlayCheck}>*/}
+                                                 {/*    <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />*/}
+                                                 {/*</audio>*/}
+
                                              </div>
                                              : null
 
@@ -651,7 +650,7 @@ const ChatBoxScreens = ({
                                  </div>
 
 
-                                   {/*<Pointer/>*/}
+
                              </div>
                            </div>
                                        :
@@ -687,6 +686,75 @@ const ChatBoxScreens = ({
                                )}
 
 
+
+
+                               {playedAudio?.map((data) =>
+                                   data?.from === 'robot'?
+                                       <div className='robotProfileWrapper'>
+                                           {data?.message ?
+                                               <div className='silviaProfileImageWrapper'>
+                                                   <img src={chatProfileImage} alt=""/>
+                                               </div>
+                                               :
+                                               null
+
+                                           }
+                                           <div style={{position: 'relative'}}>
+                                               <div className='chatBoxMessageWrapper'>
+                                                   {data?.message ?
+                                                       <div className='messageWrapper'>
+                                                           { data?.message }
+                                                       </div>
+                                                       :
+                                                       toggleEnabled ?
+
+                                                           <div className='audioWrapper'>
+
+                                                               <audio  autoPlay >
+                                                                   <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
+                                                               </audio>
+                                                           </div>
+                                                           : null
+
+                                                   }
+                                               </div>
+
+
+                                               {/*<Pointer/>*/}
+                                           </div>
+                                       </div>
+                                       :
+                                       <div className='userProfileWrapper'>
+
+                                           <div style={{position: 'relative'}}>
+                                               <div className='chatBoxMessageWrapper'>
+
+                                                   {data?.message ?
+                                                       <div className='userMessageWrapper'>
+                                                           { data?.message }
+                                                       </div>
+                                                       :
+                                                       toggleEnabled ?
+                                                           <div className='audioWrapper'>
+                                                               <audio autoPlay>
+                                                                   <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
+                                                               </audio>
+                                                           </div>
+                                                           : null
+
+                                                   }
+                                               </div>
+                                               {/*<div className='pointerMessages'>*/}
+
+                                               {/*</div>*/}
+                                           </div>
+                                           <div className='userProfileImageWrapper'>
+                                               <BsFillPersonFill size={22} color={'white'} />
+                                           </div>
+                                       </div>
+
+                               )}
+
                            </div>
 
                            <div></div>
@@ -700,7 +768,7 @@ const ChatBoxScreens = ({
                                         resize: 'none',
                                     }}
                                     disabled={loading ? loading : false}
-                                    autoSize={true}
+                                    autoSize={false}
                                     value={chatText}
                                     onChange={handleChatText}
                                     placeholder="Type or Say Your Message"
