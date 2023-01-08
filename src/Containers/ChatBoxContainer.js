@@ -21,6 +21,29 @@ const ChatBoxContainer = () => {
     const [userGreetMessages, setUserGreetMessages] = useState([]);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [playedAudio, setPlayedAudio] = useState([]);
+    const [deviceName, setDeviceName] = useState('');
+
+
+    useEffect(()=> {
+        debugger
+        console.log( navigator?.userAgent);
+        let userAgentDevice =  navigator?.userAgent;
+
+        if(userAgentDevice?.includes('Android')){
+            debugger
+            setDeviceName('android');
+            addToast('android' , { appearance: 'warning' });
+            // "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36"
+
+        }else if(userAgentDevice?.includes('iPhone')){
+            debugger
+            addToast('ios' , { appearance: 'warning' });
+            setDeviceName('ios')
+
+        }
+
+
+    },[])
 
     const handleShowModal = () => {
         debugger
@@ -89,7 +112,8 @@ const ChatBoxContainer = () => {
             .catch((err) => {
                 debugger
                 addToast(err.message , { appearance: 'error' });
-                console.log(err?.message)
+                console.log(err?.message);
+                setLoading(false);
             });
 
     }
@@ -125,7 +149,8 @@ const ChatBoxContainer = () => {
             .catch((err) => {
                 debugger
                 addToast(err.message , { appearance: 'error' });
-                console.log(err?.message)
+                console.log(err?.message);
+                setLoading(false);
             });
 
 
@@ -216,6 +241,7 @@ const ChatBoxContainer = () => {
                  debugger
                   console.log(err?.response)
                   addToast(err?.message, { appearance: 'error' });
+                  setLoading(false);
               });
         }else{
             setSilviaOpen(false);
@@ -315,7 +341,8 @@ const ChatBoxContainer = () => {
 
             setMicEnabled(false);
             addToast(err.message , { appearance: 'error' });
-            console.log(`${err.name} : ${err.message}`)
+            console.log(`${err.name} : ${err.message}`);
+            setLoading(false);
         });
     }
 
@@ -343,7 +370,8 @@ const ChatBoxContainer = () => {
             .catch((err) => {
                 debugger
                 addToast(err.message , { appearance: 'error' });
-                console.log(err?.message)
+                console.log(err?.message);
+                setLoading(false);
             });
 
 
@@ -381,6 +409,7 @@ const ChatBoxContainer = () => {
            handleModalCancel={handleModalCancel}
            deleteModalOpen={deleteModalOpen}
            playedAudio={playedAudio}
+           deviceName={deviceName}
 
 
        />

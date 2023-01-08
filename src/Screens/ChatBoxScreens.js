@@ -112,10 +112,11 @@ const BodyChatMainWrapper = styled.div`
       bottom: 5%;
       right: 3%;
       z-index: 99;
+  
 
   @media screen and (max-width: 450px) {
    position:absolute;
-    bottom: 1%;
+    bottom: 0%;
     right: 0%;
   }
  
@@ -130,7 +131,7 @@ const MainChatBoxWrapperOuter = styled.div`
 
   @media screen and (max-width: 450px) {
     width: 100%;
-    height:95vh;
+    height:90vh;
     border-radius: 20px;
   }
     `;
@@ -266,8 +267,8 @@ const ChatOnlineStatusWrapper = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 15px;
-    top: -2px;
-    left: -1px;
+    top: 2px;
+    left: 1px;
     position: relative;
     background-color: #0ce150;
     content: '';
@@ -279,8 +280,8 @@ const ChatOnlineStatusWrapper = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 15px;
-    top: -2px;
-    left: -1px;
+    top: 0px;
+    left: 1px;
     position: relative;
     background-color: #5e5c5c;
     content: '';
@@ -522,14 +523,15 @@ const ChatBoxScreens = ({
                             handleModalCancel,
                             deleteModalOpen,
                             handlePlayCheck,
-                            playedAudio
+                            playedAudio,
+                            deviceName
                         }) => {
 
 
     const { TextArea } = Input;
 
     return(
-        <BodyChatMainWrapper>
+        <BodyChatMainWrapper deviceView={deviceName}>
 
             {silviaOpen ?
               <MainChatBoxWrapperOuter>
@@ -584,7 +586,7 @@ const ChatBoxScreens = ({
                                         </ChatProfileImageWrapper>
                                         <ChatProfileImageContent>
                                             <h4>
-                                                Chat With
+                                                Speak With
                                             </h4>
                                             <h2>
                                                 SILVIA
