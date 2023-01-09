@@ -32,12 +32,12 @@ const ChatBoxContainer = () => {
         if(userAgentDevice?.includes('Android')){
             debugger
             setDeviceName('android');
-            addToast('android' , { appearance: 'warning' });
+            // addToast('android' , { appearance: 'warning' });
             // "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36"
 
         }else if(userAgentDevice?.includes('iPhone')){
             debugger
-            addToast('ios' , { appearance: 'warning' });
+            // addToast('ios' , { appearance: 'warning' });
             setDeviceName('ios')
 
         }
@@ -363,8 +363,6 @@ const ChatBoxContainer = () => {
 
                         debugger
 
-
-
                 }
             )
             .catch((err) => {
@@ -382,9 +380,7 @@ const ChatBoxContainer = () => {
         debugger
         setPlayedAudio([]);
 
-    },[toggleEnabled]);
-
-
+    },[toggleEnabled, silviaOpen]);
 
 
 

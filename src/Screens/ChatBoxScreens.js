@@ -132,7 +132,7 @@ const MainChatBoxWrapperOuter = styled.div`
   @media screen and (max-width: 450px) {
     width: 100%;
     height:90vh;
-    border-radius: 20px;
+    border-radius: 0px;
   }
     `;
 
@@ -499,6 +499,181 @@ const FooterLogoImageWrapper = styled.div`
 
 
 
+//Modal Styling
+
+const DeleteModalMainWrapper = styled.div`
+  position: absolute;
+  top: 40%;
+  z-index: 99;
+  width: 100%;
+ 
+    `;
+
+const DeleteModalBgWrapper = styled.div`
+  display: flex;
+  margin:5%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid #a6a2a2;
+  box-shadow: 2px 2px 22px #a6a2a2;
+  padding: 20px 20px;
+  font-size: 14px;
+  text-align: center;
+ 
+    `;
+
+const DeleteChatBtnWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  transition: 0.8s;
+ 
+    `;
+
+const NoBtnStyle = styled.div`
+  background-color: #8B0000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*width: 100%;*/
+  padding: 10px 5px;
+  width: 80px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+ 
+    `;
+
+const YesBtnStyle = styled.div`
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*width: 100%;*/
+  padding: 10px 5px;
+  width: 80px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+ 
+    `;
+
+
+
+
+
+//Loading Wrapper Styles
+
+const LoadingWrapperChat = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  z-index: 99;
+ 
+    `;
+
+
+
+//Audio Section Wrapper Styles
+
+const ChatMessagesWrapper = styled.div`
+
+ 
+    `;
+
+
+const RobotProfileWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding:10px;
+
+ 
+    `;
+
+
+const SilviaProfileImageWrapper = styled.div`
+  margin-right: 10px;
+
+  background-color: #1898c0;
+  border-radius: 50px;
+  width: 39px;
+  height: 39px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid green;
+  
+  
+  & img{
+    width: 40px;
+  }
+
+ 
+    `;
+
+
+const ChatBoxMessageWrapper = styled.div`
+  font-size: 14px;
+    `;
+
+const MessageWrapper = styled.div`
+  border-radius:13px;
+  padding:10px;
+  background-color: #eaeff3;
+
+ 
+    `;
+
+const AudioWrapper = styled.div`
+  & audio{
+    //width: 200px;
+    display: none;
+
+  }
+ 
+ 
+    `;
+
+const UserProfileWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding:10px;
+
+ 
+    `;
+
+const UserMessageWrapper = styled.div`
+  border-radius:13px;
+  padding:10px;
+  background-color: #006cb7;
+  color: white;
+
+ 
+    `;
+
+
+
+const UserProfileImageWrapper = styled.div`
+  margin-left: 10px;
+  background-color: black;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid green;
+
+ 
+    `;
+
 
 
 
@@ -536,37 +711,35 @@ const ChatBoxScreens = ({
             {silviaOpen ?
               <MainChatBoxWrapperOuter>
                   {deleteModalOpen ?
-                  <div className='deleteModalMainWrapper'>
-                      <div className='deleteModalBgWrapper'>
+                     <DeleteModalMainWrapper>
+                      <DeleteModalBgWrapper>
                           <p>
                               Do you want to close the chat?
                           </p>
 
-                          <div className='deleteChatBtnWrapper'>
-                              <div className='noBtnStyle' onClick={handleModalCancel}>
+                          <DeleteChatBtnWrapper>
+                              <NoBtnStyle  onClick={handleModalCancel}>
                                   Cancel
-                              </div>
-                              <div className='yesBtnStyle' onClick={loading ? null : handleCloseChat}>
-                                 Okay
-                              </div>
+                              </NoBtnStyle>
 
-                          </div>
+                              <YesBtnStyle onClick={loading ? null : handleCloseChat}>
+                                  Okay
+                              </YesBtnStyle>
+                          </DeleteChatBtnWrapper>
 
-                      </div>
+                      </DeleteModalBgWrapper>
+                  </DeleteModalMainWrapper>
 
 
-                  </div>
                       :
                       null }
 
                   {loading &&
-                      <div className='LoadingWrapperChat'>
-                          <div className='loaderCenterStyle'>
-                              <ClipLoader color='#086DB6' />
-                          </div>
-
-
+                      <LoadingWrapperChat>
+                      <div className='loaderCenterStyle'>
+                         <ClipLoader color='#086DB6' />
                       </div>
+                      </LoadingWrapperChat>
                   }
 
                 <BlueMainSectionImage>
@@ -637,142 +810,95 @@ const ChatBoxScreens = ({
                     <WhiteSectionMainWrapper>
 
                         <ChatMessagesMainWrapper>
-                           <div className='chatMessagesWrapper'>
+                           <div className=''>
                                {userGreetMessages?.map((data) =>
                                    data?.from === 'robot'?
-                           <div className='robotProfileWrapper'>
+                           <RobotProfileWrapper>
                                {data?.message ?
-                                   <div className='silviaProfileImageWrapper'>
+                                   <SilviaProfileImageWrapper>
                                        <img src={chatProfileImage} alt=""/>
-                                   </div>
+                                   </SilviaProfileImageWrapper>
                                    :
                                    null
-
                                }
                              <div style={{position: 'relative'}}>
-                                 <div className='chatBoxMessageWrapper'>
-                                     {data?.message ?
-                                         <div className='messageWrapper'>
+                                 <ChatBoxMessageWrapper>
+
+                                         <MessageWrapper>
                                              { data?.message }
-                                         </div>
-                                      :
-                                         toggleEnabled ?
+                                         </MessageWrapper>
 
-                                             <div className='audioWrapper'>
-                                                 ok
-                                                 {/*<audio  autoPlay ref={audioRef} onPlay={handlePlayCheck}>*/}
-                                                 {/*    <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />*/}
-                                                 {/*</audio>*/}
-
-                                             </div>
-                                             : null
-
-                                     }
-                                 </div>
+                                 </ChatBoxMessageWrapper>
 
 
 
                              </div>
-                           </div>
+                           </RobotProfileWrapper>
                                        :
-                                       <div className='userProfileWrapper'>
+                                       <UserProfileWrapper>
 
                                            <div style={{position: 'relative'}}>
-                                               <div className='chatBoxMessageWrapper'>
+                                               <ChatBoxMessageWrapper>
 
-                                                   {data?.message ?
-                                                       <div className='userMessageWrapper'>
+                                                       <UserMessageWrapper>
                                                            { data?.message }
-                                                       </div>
-                                                       :
-                                                       toggleEnabled ?
-                                                       <div className='audioWrapper'>
-                                                           <audio autoPlay>
-                                                               <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
-                                                           </audio>
-                                                       </div>
-                                                           : null
+                                                       </UserMessageWrapper>
 
-                                                   }
-                                               </div>
-                                              {/*<div className='pointerMessages'>*/}
+                                               </ChatBoxMessageWrapper>
 
-                                              {/*</div>*/}
                                            </div>
-                                           <div className='userProfileImageWrapper'>
+                                           <UserProfileImageWrapper>
                                                <BsFillPersonFill size={22} color={'white'} />
-                                           </div>
-                                       </div>
-
+                                           </UserProfileImageWrapper>
+                                       </UserProfileWrapper>
                                )}
-
 
 
 
                                {playedAudio?.map((data) =>
                                    data?.from === 'robot'?
-                                       <div className='robotProfileWrapper'>
-                                           {data?.message ?
-                                               <div className='silviaProfileImageWrapper'>
-                                                   <img src={chatProfileImage} alt=""/>
-                                               </div>
-                                               :
-                                               null
+                                       <RobotProfileWrapper>
 
-                                           }
                                            <div style={{position: 'relative'}}>
-                                               <div className='chatBoxMessageWrapper'>
-                                                   {data?.message ?
-                                                       <div className='messageWrapper'>
-                                                           { data?.message }
-                                                       </div>
-                                                       :
+                                               <ChatBoxMessageWrapper>
+                                                   {
                                                        toggleEnabled ?
 
-                                                           <div className='audioWrapper'>
-
+                                                          <AudioWrapper>
                                                                <audio  autoPlay >
                                                                    <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
                                                                </audio>
-                                                           </div>
+                                                          </AudioWrapper>
                                                            : null
-
                                                    }
-                                               </div>
 
 
-                                               {/*<Pointer/>*/}
+                                               </ChatBoxMessageWrapper>
+
                                            </div>
-                                       </div>
+                                       </RobotProfileWrapper>
                                        :
-                                       <div className='userProfileWrapper'>
+                                       <UserProfileWrapper>
 
                                            <div style={{position: 'relative'}}>
-                                               <div className='chatBoxMessageWrapper'>
-
-                                                   {data?.message ?
-                                                       <div className='userMessageWrapper'>
-                                                           { data?.message }
-                                                       </div>
-                                                       :
+                                               <ChatBoxMessageWrapper>
+                                                   {
                                                        toggleEnabled ?
-                                                           <div className='audioWrapper'>
+                                                           <AudioWrapper>
                                                                <audio autoPlay>
                                                                    <source type='audio/wav' src={`http://208.109.188.242:5003/api/tts?voice=en-us/southern_english_female-glow_tts&text=${data?.url}&vocoder=hifi_gan%2Funiversal_large&denoiserStrength=0.002&noiseScale=0.667&lengthScale=0.85&ssml=false`} />
                                                                </audio>
-                                                           </div>
+                                                           </AudioWrapper>
                                                            : null
 
                                                    }
-                                               </div>
-                                               {/*<div className='pointerMessages'>*/}
+                                               </ChatBoxMessageWrapper>
 
-                                               {/*</div>*/}
                                            </div>
-                                           <div className='userProfileImageWrapper'>
+                                           <UserProfileImageWrapper>
                                                <BsFillPersonFill size={22} color={'white'} />
-                                           </div>
-                                       </div>
+                                           </UserProfileImageWrapper>
+                                       </UserProfileWrapper>
 
                                )}
 
