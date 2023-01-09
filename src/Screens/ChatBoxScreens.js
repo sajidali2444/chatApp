@@ -626,6 +626,20 @@ const MessageWrapper = styled.div`
   border-radius:13px;
   padding:10px;
   background-color: #eaeff3;
+  
+  
+  
+  &:before{
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: -10px;
+    border: 10px solid transparent;
+    border-top: 16px solid #eaeff3;
+    border-top-width: 11px;
+    clip-path: ellipse();
+    
+  }
 
  
     `;
@@ -654,6 +668,17 @@ const UserMessageWrapper = styled.div`
   padding:10px;
   background-color: #006cb7;
   color: white;
+  
+  &:after{
+    content: "";
+    position: absolute;
+    top: 7px;
+    border: 10px solid transparent;
+    border-top: 10px solid #006cb7;
+    border-top-width: 6px;
+    border-top-width: 8px;
+    clip-path: ellipse();
+  }
 
  
     `;
