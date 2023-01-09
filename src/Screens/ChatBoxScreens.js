@@ -659,8 +659,6 @@ const UserProfileWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding:10px;
-
- 
     `;
 
 const UserMessageWrapper = styled.div`
@@ -679,8 +677,7 @@ const UserMessageWrapper = styled.div`
     border-top-width: 8px;
     clip-path: ellipse();
   }
-
- 
+  
     `;
 
 
