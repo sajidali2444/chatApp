@@ -224,7 +224,7 @@ const ChatBoxContainer = () => {
         const checkLocalStorage = localStorage.getItem('userNameToken');
 
         if(checkLocalStorage){
-         await axios.get(`/SilviaServer/Core/Release?user=${checkLocalStorage}`)
+         await axios.get(`https://silviaserver.com/SilviaServer/Core/Release?user=${checkLocalStorage}`)
               .then((resp) => {
 
                   console.log(resp);
