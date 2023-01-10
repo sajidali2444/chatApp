@@ -25,18 +25,18 @@ const ChatBoxContainer = () => {
 
 
     useEffect(()=> {
-        debugger
+
         console.log( navigator?.userAgent);
         let userAgentDevice =  navigator?.userAgent;
 
         if(userAgentDevice?.includes('Android')){
-            debugger
+
             setDeviceName('android');
             // addToast('android' , { appearance: 'warning' });
             // "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36"
 
         }else if(userAgentDevice?.includes('iPhone')){
-            debugger
+
             // addToast('ios' , { appearance: 'warning' });
             setDeviceName('ios')
 
@@ -46,7 +46,7 @@ const ChatBoxContainer = () => {
     },[])
 
     const handleShowModal = () => {
-        debugger
+
         setDeleteModalOpen(true);
     };
     const handleModalCancel = () => {
@@ -63,12 +63,12 @@ const ChatBoxContainer = () => {
     }
 
     const handleGreetingMessages = async (guestUser, setLoading) =>{
-        debugger
+
         setChatText('');
-       await  axios.get(`https://162.244.80.91:10870/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
+       await  axios.get(`/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
             .then((resp) => {
                 console.log(resp?.data, "getUser resoponse");
-                debugger
+
                 if(resp?.data?.success === true){
 
                 const { response } = resp?.data;
@@ -91,7 +91,7 @@ const ChatBoxContainer = () => {
                                 if(message === "[silence]"){
 
                                 }else{
-                                    debugger
+
                                     setPlayedAudio((prevState) => {
                                     const latestState = [...prevState, {from: 'robot', type: 'voice', url: message}]
                                     return latestState;
@@ -110,7 +110,7 @@ const ChatBoxContainer = () => {
                 }
             )
             .catch((err) => {
-                debugger
+
                 addToast(err.message , { appearance: 'error' });
                 console.log(err?.message);
                 setLoading(false);
@@ -121,7 +121,7 @@ const ChatBoxContainer = () => {
     console.log(userGreetMessages);
 
     const handleUserNameToken = async () => {
-        debugger
+
         setLoading(true);
 
         const data = nanoid();
@@ -131,15 +131,15 @@ const ChatBoxContainer = () => {
         localStorage.setItem('userNameToken', guestUser);
         setToggleEnabled(true);
 
-        await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
+        await axios.get(`/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
             .then((resp) => {
-                    debugger
+
                     console.log(resp)
                 if(resp?.data?.success === true){
-                    debugger
+
                     handleGreetingMessages(guestUser, setLoading);
                 }else{
-                    debugger
+
                     addToast(resp?.data?.success , { appearance: 'warning' });
 
                 }
@@ -147,7 +147,7 @@ const ChatBoxContainer = () => {
                 }
             )
             .catch((err) => {
-                debugger
+
                 addToast(err.message , { appearance: 'error' });
                 console.log(err?.message);
                 setLoading(false);
@@ -179,11 +179,11 @@ const ChatBoxContainer = () => {
 
 
     const handleSilviaChat = async () => {
-        debugger
+
         setSilviaOpen(true);
 
         const checkLocalStorage = localStorage.getItem('userNameToken');
-        debugger
+
         if(checkLocalStorage){
             // const release = await fetch(`http://162.244.80.91:10870/SilviaServer/Core/Release?user=${checkLocalStorage}`, {
             //     method: "get",
@@ -219,14 +219,14 @@ const ChatBoxContainer = () => {
     }
 
     const handleCloseChat = async  () => {
-        debugger
+
 
         const checkLocalStorage = localStorage.getItem('userNameToken');
-        debugger
+
         if(checkLocalStorage){
-         await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/Release?user=${checkLocalStorage}`)
+         await axios.get(`/SilviaServer/Core/Release?user=${checkLocalStorage}`)
               .then((resp) => {
-                  debugger
+
                   console.log(resp);
                   setUserGreetMessages([]);
                   setDeleteModalOpen(false);
@@ -238,7 +238,7 @@ const ChatBoxContainer = () => {
                   }
               )
               .catch((err) => {
-                 debugger
+
                   console.log(err?.response)
                   addToast(err?.message, { appearance: 'error' });
                   setLoading(false);
@@ -266,8 +266,40 @@ const ChatBoxContainer = () => {
     };
 
     const handleMicPermissions = async () => {
+        debugger
 
-        //
+
+        navigator.getUserMedia({ audio: true }, (stream) => {
+            (async function () {
+                debugger
+                // const res = await fetch('https://208.109.188.242:2700/', {
+                //     method: 'POST',
+                //     body: stream,
+                // });
+                // const json = await res.json();
+                // debugger
+                // console.log(json);
+
+                const res = await axios.post('https://208.109.188.242:2700/', stream);
+                debugger
+                console.log(res);
+
+            })();
+            // async function sendAudioStream() {
+            //     debugger
+            //     const res = await fetch('https://208.109.188.242:2700/', {
+            //         method: 'POST',
+            //         body: stream,
+            //     });
+            //     const json = await res.json();
+            //     debugger
+            //     console.log(json);
+            // }
+        }, (error) => {
+            console.error(error);
+        });
+
+
         // navigator.mediaDevices.getUserMedia({audio:true})
         //     .then(function onSuccess(stream) {
         //         const recorder = new MediaRecorder(stream);
@@ -333,26 +365,26 @@ const ChatBoxContainer = () => {
         //         invokeSaveAsDialog(blobNew);
         //     });
         // });
-        const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
-        permissions.then((stream) => {
-            setMicEnabled(!micEnabled);
-
-        }).catch((err) => {
-
-            setMicEnabled(false);
-            addToast(err.message , { appearance: 'error' });
-            console.log(`${err.name} : ${err.message}`);
-            setLoading(false);
-        });
+        // const permissions = navigator.mediaDevices.getUserMedia({audio: true, video: false})
+        // permissions.then((stream) => {
+        //     setMicEnabled(!micEnabled);
+        //
+        // }).catch((err) => {
+        //
+        //     setMicEnabled(false);
+        //     addToast(err.message , { appearance: 'error' });
+        //     console.log(`${err.name} : ${err.message}`);
+        //     setLoading(false);
+        // });
     }
 
     const handleMessages = async () => {
-        debugger
+
         setLoading(true);
-        debugger
-        await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
+
+        await axios.get(`/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
             .then((resp) => {
-                    debugger
+
                 setUserGreetMessages((prevState) => {
                     const latestState = [...prevState, {from: 'me', type: 'text', message: chatText}]
                     return latestState;
@@ -361,12 +393,12 @@ const ChatBoxContainer = () => {
                     setChatText('');
                 handleGreetingMessages(userNameToken, setLoading);
 
-                        debugger
+
 
                 }
             )
             .catch((err) => {
-                debugger
+
                 addToast(err.message , { appearance: 'error' });
                 console.log(err?.message);
                 setLoading(false);
@@ -377,7 +409,7 @@ const ChatBoxContainer = () => {
     }
 
     useEffect(()=>{
-        debugger
+
         setPlayedAudio([]);
 
     },[toggleEnabled, silviaOpen]);
