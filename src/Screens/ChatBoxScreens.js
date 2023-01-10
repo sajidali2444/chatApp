@@ -721,7 +721,12 @@ const ChatBoxScreens = ({
                             deleteModalOpen,
                             handlePlayCheck,
                             playedAudio,
-                            deviceName
+                            deviceName,
+                            listening,
+                            SpeechRecognition,
+                            resetTranscript,
+                            transcript,
+                            handleMic
                         }) => {
 
 
@@ -939,7 +944,7 @@ const ChatBoxScreens = ({
                                     }}
                                     disabled={loading ? loading : false}
                                     autoSize={false}
-                                    value={chatText}
+                                    value={transcript}
                                     onChange={handleChatText}
                                     placeholder="Type or Say Your Message"
                                 />
@@ -954,11 +959,11 @@ const ChatBoxScreens = ({
                                     </MicBackgroundStyle>
                                     :
                                     micEnabled ?
-                                        <MicBackgroundStyle bg='green' onClick={loading ? null : handleMicPermissions}>
+                                        <MicBackgroundStyle bg='green' onClick={handleMic}>
                                             <BsFillMicFill size={18}/>
                                         </MicBackgroundStyle>
                                         :
-                                        <MicBackgroundStyle bg='#8B0000' onClick={loading ? null : handleMicPermissions}>
+                                        <MicBackgroundStyle bg='#8B0000' onClick={handleMic}>
                                             <BsFillMicMuteFill size={18} />
                                         </MicBackgroundStyle>
 
