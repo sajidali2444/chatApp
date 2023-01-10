@@ -65,7 +65,7 @@ const ChatBoxContainer = () => {
     const handleGreetingMessages = async (guestUser, setLoading) =>{
         debugger
         setChatText('');
-       await  axios.get(`https://162.244.80.91:10870/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
+       await  axios.get(`https://silviaserver.com/SilviaServer/Core/GetAll?user=${guestUser}`, {headers})
             .then((resp) => {
                 console.log(resp?.data, "getUser resoponse");
                 debugger
@@ -131,7 +131,7 @@ const ChatBoxContainer = () => {
         localStorage.setItem('userNameToken', guestUser);
         setToggleEnabled(true);
 
-        await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
+        await axios.get(`https://silviaserver.com/SilviaServer/Core/Create?user=${guestUser}&file=SilviaServerChat.sil`, {headers})
             .then((resp) => {
                     debugger
                     console.log(resp)
@@ -224,7 +224,7 @@ const ChatBoxContainer = () => {
         const checkLocalStorage = localStorage.getItem('userNameToken');
         debugger
         if(checkLocalStorage){
-         await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/Release?user=${checkLocalStorage}`)
+         await axios.get(`https://silviaserver.com/SilviaServer/Core/Release?user=${checkLocalStorage}`)
               .then((resp) => {
                   debugger
                   console.log(resp);
@@ -350,7 +350,7 @@ const ChatBoxContainer = () => {
         debugger
         setLoading(true);
         debugger
-        await axios.get(`https://162.244.80.91:10870/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
+        await axios.get(`https://silviaserver.com/SilviaServer/Core/SetInput?user=${userNameToken}&text=${chatText}`, {headers})
             .then((resp) => {
                     debugger
                 setUserGreetMessages((prevState) => {
